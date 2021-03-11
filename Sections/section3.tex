@@ -1,0 +1,264 @@
+\subsection{Multi-time-scale}
+Introduce the multi-time-scale with two-term expansion:
+\begin{equation}
+    T \sim T_0 + \varepsilon^2 T_1.
+    \label{eq: expand time}
+\end{equation}
+
+Eq.~\eqref{eq: expand time} also expands partial differential operators about time \ensuremath{T}
+\begin{equation}
+    \pdv{}{T} \sim \pdv{}{T_0} + \varepsilon^2 \pdv{}{T_1}
+    \label{eq: expand time dt}
+\end{equation}
+and
+\begin{equation}
+    \pdv{}{T} \sim \pdv[2]{}{T_0} + 2 \varepsilon^2 \pdv{}{T_0}{T_1} + \order{\varepsilon^4}
+    \label{eq: expand time ddt}
+\end{equation}
+
+The undetermined solution of plane wave \ensuremath{W\bkt{X,T}} is expanded accordingly
+\begin{equation}
+    W\bkt{X,T} = W\bkt{X,T_0,T_1} \sim W_0\bkt{X,T_0,T_1} + \varepsilon^2 W_1\bkt{X,T_0,T_1} 
+    \label{eq: expand solution}
+\end{equation}
+
+Note that the water potential is linear and thus needing no expansion
+\begin{equation}
+    \Phi\bkt{X,Z,T} = \Phi\bkt{X,Z,T_0,T_1}.
+\end{equation}
+
+
+\subsection{Hierarchical equations}
+Substituting Eqs.~(\ref{eq: expand time}-\ref{eq: expand solution}) into Eqs.~\eqref{eq: FSI kinematic nondimension} and \eqref{eq: FSI EOM nondimension} and collecting \ensuremath{\varepsilon}, the classic perturbation procedure generates a series of hierarchical linear partial differential equations (PDE) with non-linear in-homogeneous terms on the right hind side from the second-order on. Retain up to the second-order:
+
+\begin{itemize}
+    \item \ensuremath{\order{\varepsilon^0}}:
+    
+    \begin{equation}
+        \pdv{W_0}{T_0}
+        =
+        \frac{\mathrm{g}}{\tanh\bkt{H}} \pdv{\Phi}{Z} \eval_{Z=0}
+        \label{eq: 1st order kinematic}
+    \end{equation}
+    
+    \begin{equation}
+    \begin{aligned}
+        \beta\,{k}^{4} {\frac { \partial ^{4} W_0 }{\partial {X}^{4}}} 
+        + k\tanh \left( H \right) {\frac {\partial ^{2}  W_0 }{\partial {T_0}^2}}
+        + \alpha\mathrm{g}{\frac {\partial \Phi }{\partial T_0}} \eval_{Z=0}
+        + \alpha\mathrm{g} W_0
+        =0
+    \end{aligned}
+    \label{eq: 1st order combined}
+    \end{equation}
+    
+    \begin{equation}
+        \pdv[2]{\Phi}{X} + \pdv[2]{\Phi}{Z} = 0
+        \label{eq: Laplace demensionless}
+    \end{equation}
+    
+    \begin{equation}
+        \pdv{\Phi}{Z} \eval_{Z=-H} = 0
+        \label{eq: seabed demensionless}
+    \end{equation}
+    
+    \item \ensuremath{\order{\varepsilon^2}}:
+    
+    \begin{equation}
+    \begin{aligned}
+        k & \tanh\bkt{H} \pdv[2]{W_1}{T_0}
+        + \beta k^4 \pdv[4]{W_1}{X}
+        + \alpha \mathrm{g} W_1  
+        \\
+        & =
+        18 \frac{\beta k^4}{d^2} \Bkt{\pdv{W_0}{X}}^2 \pdv[2]{W_0}{X}
+        - 2 k \tanh \bkt{H} \pdv{W_0}{T_0}{T_1}
+        - \alpha \mathrm{g} \pdv{\Phi}{T_1} \eval_{Z=-H}
+    \end{aligned}
+    \label{eq: 2nd order combined}
+    \end{equation}
+\end{itemize}
+
+
+\subsection{The first-order}
+
+\subsubsection{The non-dimensional first-order solution}
+First separate the potential into three parts, namely the time-dependent part \ensuremath{\varphi\bkt{T_0,t_1}}, the horizontal space-dependent part \ensuremath{\xi\bkt{X}} and the vertical space-dependent part as \ensuremath{\zeta\bkt{Z}}
+\begin{equation}
+    \Phi\bkt{X,Z,T_0,T_1} = \varphi\bkt{T_0,T_1} \xi\bkt{X} \zeta\bkt{Z}.
+    \label{eq: phi separation}
+\end{equation}
+
+Substitution of Eq.~\eqref{eq: phi separation} into Eqs.~\eqref{eq: Laplace demensionless} and \eqref{eq: seabed demensionless} and elimination of \ensuremath{\varphi\bkt{T_0,T_1}} yeild
+\begin{equation}
+    \Phi\bkt{X,Z,T_0,T_1} = \varphi\bkt{T_0,T_1}  \cos \bkt{ X } \cosh\bkt{Z+H}.
+    \label{eq: sol xi and zeta}
+\end{equation}
+Note that the integral constants of \ensuremath{\xi\bkt{X}} and \ensuremath{\zeta\bkt{Z}} merge into the undetermined time-dependent function \ensuremath{\varphi\bkt{T_0,T_1}}. We also get rid of the the arbitrary phase shift of \ensuremath{\xi\bkt{X}} because only the plane propagating wave is of interest. 
+
+Taking the partial differentiation about \ensuremath{T_0} of Eq.~\eqref{eq: 1st order combined} and using Eqs.~\eqref{eq: 1st order kinematic} and \eqref{eq: sol xi and zeta}, we obtain
+\begin{equation}
+    k \tanh\bkt{H} \pdv[2]{\varphi}{T_0} + \beta k^4 \varphi + \alpha \pdv[2]{\varphi}{T_0} + \alpha \mathrm{g} \varphi = 0.
+    \label{eq: ode for varphi}
+\end{equation}
+
+The solution of Eq.~\eqref{eq: ode for varphi} is
+\begin{equation}
+    \varphi \bkt{T_0,T_1}
+    = 
+    C\bkt{T_1}
+    \cos \bkt{ 
+    \sqrt{\frac{ \beta k^4 + \alpha \mathrm{g} }{ k \tanh\bkt{H} + \alpha }} T_0 
+    + \theta\bkt{T_1}
+    }.
+    \label{eq: sol varphi}
+\end{equation}
+
+The coefficient in front of the regular time scale \ensuremath{T_0} in Eq.~\eqref{eq: sol varphi} is the primary angular frequency \ensuremath{\Omega_0}
+\begin{equation}
+    \Omega_0 = \sqrt{ \frac{ \beta k^4 + \alpha \mathrm{g} }{ k \tanh\bkt{H} + \alpha } }
+    \label{eq: linear DR}
+\end{equation}
+
+Eq.~\eqref{eq: linear DR} is the non-dimensional linear dispersion relation.
+
+Combine Eqs.~\eqref{eq: sol xi and zeta} and \eqref{eq: sol varphi} into a right-ward propagating wave as shown in Fig.~\ref{fig:sketch} 
+\begin{equation}
+    W_0 \left( X,T_{0},T_{1} \right) 
+    = 
+    A \bkt{T_1}
+    \sin\bkt{ X
+    - \Omega_0 T_0 
+    + \theta\bkt{T_1} }
+    \label{eq: sol W0}
+\end{equation}
+and
+\begin{equation}
+    \Phi\bkt{X,Z,T_0,T_1} 
+    = 
+    - \Omega_0
+    \frac{ \cosh\bkt{Z+H} }{ \sinh\bkt{H} } 
+    A\bkt{T_1} 
+    \cos \bkt{ 
+    X
+    - \Omega_0 T_0 
+    + \theta\bkt{T_1}
+    }
+    \label{eq: sol Phi}
+\end{equation}
+where \ensuremath{A\bkt{T_1}=- \frac{\sinh\bkt{H}}{\Omega_0}  C\bkt{T_1}}.
+
+\subsubsection{The dimensional first-order solution}
+Inverse utilization of Eq.~\eqref{eq: nondimensional variables} gives the dimensional first-order solution.
+\begin{itemize}
+    \item The dimensional first-order dispersion relation
+    \begin{equation}
+        \omega_0 =  \sqrt{ \frac{ k \tanh\bkt{kh} \bkt{\beta k^4 + \alpha \mathrm{g} } }{ k \tanh\bkt{kh} + \alpha } }
+        \label{eq: linear dr}
+    \end{equation}
+    
+    \item The dimensional first-order phase velocity
+\begin{equation}
+    c = \sqrt{ \frac{ \tanh\bkt{kh} \bkt{\beta k^4 + \alpha \mathrm{g} } }{ k \bkt{ k \tanh\bkt{kh} + \alpha } } }
+\end{equation}
+\end{itemize}
+
+
+\subsection{The second-order}
+\subsubsection{The non-dimensional second-order solution}
+Substitute the first-order solution Eqs.~\eqref{eq: sol Phi} and \eqref{eq: sol W0} into the right-hand-side of Eq.~\eqref{eq: 2nd order combined}, then collect the trigonometric. There exist primary trigonometric terms, i.e., \ensuremath{\sin\bkt{ X - \Omega_0 T_0 + \theta\bkt{T_1}}} and \ensuremath{\cos\bkt{ X - \Omega_0 T_0 + \theta\bkt{T_1}}}. Their coefficients are
+\begin{equation}
+    \begin{aligned}
+        C_{\sin}
+        = & 
+        {\frac {2\,k\tanh \left( H \right) \sqrt {\beta\,{k}^{4}+\alpha\mathrm{g}} }{\sqrt {k\tanh \left( H \right) +\alpha}}}  A \left( T_{1} \right)  {\frac {{\rm d} \theta \left( T_{1} \right)}{{\rm d}T_{1}}}
+        + {\frac {9\,\beta\,{k}^{2} }{2\,{d}^{2}}}  A^{3}  \left( T_{1} \right)  \\
+        & + \frac {\cosh \left( H \right) \alpha\mathrm{g} }{\sinh \left( H \right) }   {\frac {\sqrt {\beta\,{k}^{4}+\alpha\mathrm{g}}}{\sqrt {k\tanh \left( H \right) +\alpha}}}  A \left( T_{1} \right) {\frac {{\rm d} \theta \left( T_{1} \right)}{{\rm d}T_{1}}}
+    \end{aligned}
+    \label{eq: coef sin}
+\end{equation}
+
+\begin{equation}
+    \begin{aligned}
+        C_{\cos}
+        = & 
+        2\,{\frac {k\tanh \left( H \right)   \sqrt {\beta\,{k}^{4}+\alpha\mathrm{g}}}{\sqrt {k\tanh \left( H \right) +\alpha}}}   {\frac {{\rm d} A \left( T_{1} \right)}{{\rm d}T_{1}}}   \\
+        & + \frac {\cosh \left( H \right) \alpha\mathrm{g} }{\sinh \left( H \right) } 
+        {\frac {\sqrt {\beta\,{k}^{4}+\alpha\mathrm{g}}}{\sqrt {k\tanh \left( H \right) +\alpha}}}  \frac {{\rm d} A \left( T_{1} \right)}{{{\rm d} }T_{1}}
+    \end{aligned}
+    \label{eq: coef cos}
+\end{equation}
+
+Avoiding secular terms requires that the \ensuremath{C_{\sin}} and \ensuremath{C_{\cos}} equal to zero. Eq.~\eqref{eq: coef cos} can solve \ensuremath{A\bkt{T_1}}:
+\begin{equation}
+    A\bkt{T_1} = A.
+    \label{eq: sol C4}
+\end{equation}
+Hence A is a arbitrary non-dimensional constant independent of the slow time-scale \ensuremath{T_1}.
+
+Substitution of Eq.~\eqref{eq: sol C4} into Eq.~\eqref{eq: coef sin} leads to
+\begin{equation}
+    \theta \left( T_{1} \right) 
+    = 
+    -\frac {9\,\beta\,{k}^{2}  \sinh \left( 2\,H \right) }{2\,{d}^{2} \left( \alpha\mathrm{g}\cosh \left( 2\,H \right) +2\,k\cosh \left( 2\,H \right) +\alpha\mathrm{g}-2\,k \right) \Omega_0 }
+    {A}^{2} T_{1}.
+    \label{eq: theta2}
+\end{equation}
+
+Substitute Eqs.~\eqref{eq: sol C4} and \eqref{eq: theta2} back into the first-order solution Eq.~\eqref{eq: sol W0}, and let \ensuremath{A=1}. Now, the plane propagating wave reads
+
+\begin{equation}
+    \begin{aligned}
+    W_{0}
+    =
+    \sin\bkt{ X
+    - \Omega_0 T
+    -\frac {9\varepsilon^2 \beta{k}^{2}  \sinh \left( 2H \right) T }{2{d}^{2} \left( \alpha \mathrm{g} \cosh \left( 2H \right) +2k\cosh \left( 2H \right) +\alpha \mathrm{g}-2k \right) \Omega_0 }
+     } .
+    \end{aligned}
+    \label{eq: sol W0 2nd}
+\end{equation}
+
+The nonlinear angular frequency up to the second-order is
+\begin{equation}
+    \begin{aligned}
+        \Omega 
+        =
+        \Omega_0 + \frac {9\varepsilon^2 \beta{k}^{2}  \sinh \left( 2H \right) }{2{d}^{2} \left( \alpha \mathrm{g} \cosh \left( 2H \right) +2k\cosh \left( 2H \right) +\alpha \mathrm{g}-2k \right) \Omega_0 }.
+    \end{aligned}
+    \label{eq: sol Omega 2nd}
+\end{equation}
+
+
+\subsubsection{The dimensional second-order solution}
+Inverse utilization Eq.~\eqref{eq: nondimensional variables} gives the dimensional second-order solution, too.
+\begin{itemize}
+    \item The dimensional second-order dispersion relation
+    \begin{equation}
+    \begin{aligned}
+        \omega 
+        = & 
+        \sqrt {\frac {{\beta\,{k}^{4}+\alpha\mathrm{g}}}{ {k\tanh \left( kh \right) +\alpha}}} 
+        + 
+        \frac{ 9 \varepsilon^2 \beta k^2 \tanh\bkt{kh} }{ 2 d^2 \bkt{ 2 k \tanh^2\bkt{kh} + \alpha \mathrm{g} } }
+        \sqrt{\frac
+        {k\tanh \left( kh \right) +\alpha}
+        {\beta{k}^{4}+\alpha\mathrm{g}} }
+    \end{aligned}
+    \label{eq: 2.34}
+\end{equation}
+    
+    \item The dimensional second-order phase velocity
+    \begin{equation}
+    \begin{aligned}
+        c 
+        = & 
+        \frac{1}{k} \sqrt {\frac {{\beta\,{k}^{4}+\alpha\mathrm{g}}}{ {k\tanh \left( kh \right) +\alpha}}} 
+        + 
+        \frac{ 9 \varepsilon^2 \beta k \tanh\bkt{kh} }{ 2 d^2 \bkt{ 2 k \tanh^2\bkt{kh} + \alpha \mathrm{g} } }
+        \sqrt{\frac
+        {k\tanh \left( kh \right) +\alpha}
+        {\beta{k}^{4}+\alpha\mathrm{g}} }
+    \end{aligned}
+\end{equation}
+\end{itemize}
